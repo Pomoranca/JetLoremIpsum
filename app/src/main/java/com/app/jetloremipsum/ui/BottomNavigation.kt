@@ -1,8 +1,5 @@
-package com.app.orderfoodapp
+package com.app.jetloremipsum.ui
 
-import android.os.Bundle
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
 import androidx.annotation.StringRes
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -13,31 +10,13 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.compose.*
-import com.app.orderfoodapp.ui.theme.OrderFoodAppTheme
-
-class MainActivity : ComponentActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContent {
-            OrderFoodAppTheme() {
-                // A surface container using the 'background' color from the theme
-                Surface(
-                    color = MaterialTheme.colors.background
-                ) {
-                    MyApp()
-                }
-            }
-        }
-    }
-}
+import com.app.jetloremipsum.R
+import com.app.jetloremipsum.Settings
+import com.app.jetloremipsum.ui.feed.FeedScreen
+import com.app.jetloremipsum.ui.feed.FeedViewModel
 
 @Composable
-fun MyApp() {
-    MyNavHost()
-}
-
-@Composable
-fun MyNavHost() {
+fun NavigationHost(feedViewModel: FeedViewModel) {
     val navController = rememberNavController()
 
     Scaffold(
@@ -73,7 +52,13 @@ fun MyNavHost() {
     ) {
 
         NavHost(navController, startDestination = Screen.Feed.route) {
-            composable(Screen.Feed.route) { Profile(navController) }
+
+            composable(Screen.Feed.route) {
+                FeedScreen(
+                    navController,
+                    feedViewModel.resultItems
+                )
+            }
             composable(Screen.Settings.route) { Settings(navController) }
         }
     }
@@ -88,9 +73,3 @@ sealed class Screen(val route: String, @StringRes val resourceId: Int, val icon:
     object Feed : Screen("Feed", R.string.feed, Icons.Filled.Dashboard)
     object Settings : Screen("Settings", R.string.settings, Icons.Filled.Settings)
 }
-
-
-
-
-
-

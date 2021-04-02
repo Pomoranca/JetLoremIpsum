@@ -1,4 +1,4 @@
-package com.app.orderfoodapp
+package com.app.jetloremipsum
 
 import org.junit.Test
 

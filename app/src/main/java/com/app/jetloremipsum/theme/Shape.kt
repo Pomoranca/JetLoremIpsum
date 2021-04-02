@@ -1,4 +1,4 @@
-package com.app.orderfoodapp.ui.theme
+package com.app.jetloremipsum.theme
 
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Shapes
