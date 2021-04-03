@@ -14,6 +14,8 @@ class FeedViewModel(private val mainRepository: MainRepository) : ViewModel() {
 
     private var currentEditPosition by mutableStateOf(-1)
 
+    private var loadingItems by mutableStateOf(false)
+
 
     var resultItems by mutableStateOf(listOf<ResultItem>())
         private set
@@ -41,5 +43,13 @@ class FeedViewModel(private val mainRepository: MainRepository) : ViewModel() {
             emit(Resource.error(data = null, message = e.message.toString()))
         }
 
+    }
+
+    fun startLoading() {
+        loadingItems = true
+    }
+
+    fun endLoading(){
+        loadingItems = false
     }
 }

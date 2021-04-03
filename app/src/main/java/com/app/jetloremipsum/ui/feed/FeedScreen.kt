@@ -21,19 +21,12 @@ import com.app.jetloremipsum.theme.OrderFoodAppTheme
 
 @Composable
 fun FeedScreen(
+    viewModel: FeedViewModel,
+    lifecycleOwner: LifecycleOwner,
+    context: Context,
     navController: NavHostController,
     items: List<ResultItem>,
 ) {
-    LazyColumn() {
-        items(items = items) {
-            FeedItem(item = it)
-        }
-    }
-}
-
-
-fun addItems(viewModel: FeedViewModel, lifecycleOwner: LifecycleOwner, context: Context) {
-
     viewModel.getResults().observe(lifecycleOwner, {
         it?.let { resource ->
             when (resource.status) {
@@ -46,13 +39,19 @@ fun addItems(viewModel: FeedViewModel, lifecycleOwner: LifecycleOwner, context: 
                     Toast.makeText(context, it.message.toString(), Toast.LENGTH_LONG).show()
                 }
 
-                else -> {
-
+                Status.LOADING -> {
+                    viewModel.startLoading()
                 }
             }
         }
     })
+    LazyColumn() {
+        items(items = items) {
+            FeedItem(item = it)
+        }
+    }
 }
+
 
 @Composable
 fun ListItemDivider() {
