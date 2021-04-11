@@ -47,6 +47,9 @@
     <string name="label_decrease">Decrease</string>
     <string name="feed">Feed</string>
     <string name="settings">Settings</string>
+    <string name="feed_details">FeedDetails</string>
+    <string name="retry">retry</string>
+    <string name="load_error">Can\'t update latest posts</string>
 
 </resources>
 
