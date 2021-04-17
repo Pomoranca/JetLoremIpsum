@@ -1,6 +1,6 @@
 package com.app.jetloremipsum.network
 
-import com.app.jetloremipsum.data.Result
+import com.app.jetloremipsum.network.NetworkingConstants.URL_ALBUMS
 import com.app.jetloremipsum.network.NetworkingConstants.URL_PHOTOS
 import com.app.jetloremipsum.network.NetworkingConstants.URL_POSTS
 import com.app.jetloremipsum.result.Photo
@@ -14,10 +14,13 @@ interface LoremApiService {
     suspend fun getResults(): List<Post>
 
     @GET("$URL_POSTS/{number}")
-    suspend fun getResult(@Path("number") number: Int): Result<Post>
+    suspend fun getResult(@Path("number") number: Int): Post
 
-    @GET(URL_PHOTOS)
-    suspend fun getPhotos(): Result<List<Photo>>
+    @GET("$URL_ALBUMS/{number}/$URL_PHOTOS")
+    suspend fun getPhotos(@Path("number") number: Int): List<Photo>
+
+    @GET("$URL_PHOTOS/{id}")
+    suspend fun getPhoto(@Path("id") id: Int): Photo
 
 
 }

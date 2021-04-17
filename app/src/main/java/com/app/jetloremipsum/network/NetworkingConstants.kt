@@ -17,6 +17,4 @@ object NetworkingConstants {
     const val URL_USERS = "users"
 
 
-
-
 }

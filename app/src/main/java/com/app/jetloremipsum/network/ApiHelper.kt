@@ -6,5 +6,7 @@ class ApiHelper @Inject constructor(private val apiService: LoremApiService) {
 
     suspend fun getResults() = apiService.getResults()
 
-    suspend fun getPhotos() = apiService.getPhotos()
+    suspend fun getPhotos(number : Int) = apiService.getPhotos(number)
+
+    suspend fun getPhoto(id: Int) = apiService.getPhoto(id)
 }

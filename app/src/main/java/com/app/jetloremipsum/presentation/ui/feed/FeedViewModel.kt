@@ -1,39 +1,120 @@
 package com.app.jetloremipsum.presentation.ui.feed
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
+import android.nfc.tech.MifareUltralight.PAGE_SIZE
+import android.util.Log
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
-import com.app.jetloremipsum.data.Result
-import com.app.jetloremipsum.repository.impl.PostsRepositoryImpl
+import androidx.lifecycle.viewModelScope
+import com.app.jetloremipsum.presentation.util.TAG
+import com.app.jetloremipsum.repository.impl.PostsRepository
 import com.app.jetloremipsum.result.Photo
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 
 @HiltViewModel
 class FeedViewModel @Inject constructor(
-     val repositoryImpl: PostsRepositoryImpl
-) : ViewModel() {
+    val repository: PostsRepository,
+    ) : ViewModel() {
 
-    private val _photos = MutableLiveData<Result<List<Photo>>>()
+    val photos: MutableState<List<Photo>> = mutableStateOf(ArrayList())
 
-    val photos: LiveData<Result<List<Photo>>>
-        get() = _photos
+    val loading = mutableStateOf(false)
 
+    val page = mutableStateOf(1)
+
+    var photoListScrollPosition = 0
 
     init {
-        getPhotos()
+            onTriggerEvent(PhotoListEvent.RestoreStateEvent)
     }
 
-    private fun getPhotos() {
-        CoroutineScope(Dispatchers.IO).launch {
-            _photos.value = repositoryImpl.getPhotos()
+
+    private fun onTriggerEvent(event : PhotoListEvent){
+        viewModelScope.launch {
+            try {
+                when(event){
+                    is PhotoListEvent.NewSearchEvent -> {
+                    }
+                    is PhotoListEvent.NextPageEvent -> {
+                        nextPage()
+                    }
+                    is PhotoListEvent.RestoreStateEvent -> {
+                        restoreState()
+                    }
+                }
+            }catch (e: Exception){
+                Log.e(TAG, "launchJob: Exception: ${e}, ${e.cause}")
+                e.printStackTrace()
+            }
+            finally {
+                Log.d(TAG, "launchJob: finally called.")
+            }
         }
     }
 
+    private suspend fun restoreState(){
+        loading.value = true
+        val results: MutableList<Photo> = mutableListOf()
+        for(p in 1..page.value){
+            val result = repository.getPhotos(p)
+            results.addAll(result)
+            if(p == page.value){ // done
+                photos.value = results
+                loading.value = false
+            }
+        }
+    }
 
+    private suspend fun nextPage(){
+        // prevent duplicate event due to recompose happening to quickly
+        if((photoListScrollPosition + 1) >= (page.value * PAGE_SIZE) ){
+            loading.value = true
+            incrementPage()
+            Log.d(TAG, "nextPage: triggered: ${page.value}")
+
+            // just to show pagination, api is fast
+            delay(1000)
+
+            if(page.value > 1){
+                val result = repository.getPhotos(page.value)
+                Log.d(TAG, "search: appending")
+                appendRecipes(result)
+            }
+            loading.value = false
+        }
+    }
+
+    private fun incrementPage(){
+        setPage(page.value + 1)
+    }
+
+    private fun setPage(page: Int){
+        this.page.value = page
+
+    }
+
+
+
+    /**
+     * Append new recipes to the current list of recipes
+     */
+    private fun appendRecipes(recipes: List<Photo>){
+        val current = ArrayList(this.photos.value)
+        current.addAll(recipes)
+        this.photos.value = current
+    }
+}
+
+sealed class PhotoListEvent {
+    object NewSearchEvent : PhotoListEvent()
+
+    object NextPageEvent : PhotoListEvent()
+
+    // restore after process death
+    object RestoreStateEvent: PhotoListEvent()
 }
 

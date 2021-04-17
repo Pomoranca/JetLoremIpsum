@@ -11,5 +11,5 @@ import com.app.jetloremipsum.R
 sealed class Screen(val route: String, @StringRes val resourceId: Int, val icon: ImageVector?) {
     object Feed : Screen("Feed", R.string.feed, Icons.Filled.Dashboard)
     object Settings : Screen("Settings", R.string.settings, Icons.Filled.Settings)
-    data class FeedDetails(val postId: String) : Screen("FeedDetails", R.string.feed_details, null)
+    object FeedDetails : Screen("FeedDetails", R.string.feed_details, null)
 }

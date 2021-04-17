@@ -1,6 +1,5 @@
 package com.app.jetloremipsum.repository.impl
 
-import com.app.jetloremipsum.data.Result
 import com.app.jetloremipsum.network.ApiHelper
 import com.app.jetloremipsum.network.LoremApiService
 import com.app.jetloremipsum.result.Photo
@@ -11,9 +10,13 @@ import javax.inject.Singleton
 class PostsRepositoryImpl @Inject constructor(private val apiHelper: ApiHelper) : PostsRepository
    {
 
-     override suspend fun getPhotos(): Result<List<Photo>> {
-        return apiHelper.getPhotos()
+     override suspend fun getPhotos(number: Int): List<Photo> {
+        return apiHelper.getPhotos(number)
     }
+
+       override suspend fun getPhoto(id: Int): Photo {
+           return apiHelper.getPhoto(id)
+       }
 
 //    override suspend fun getUsers(): Result<List<User>> {
 //        TODO("Not yet implemented")
