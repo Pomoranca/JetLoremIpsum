@@ -1,4 +1,4 @@
-# JetLoremIpsum
+# JetLoremIpsum [UNDER DEVELOPMENT]
 Order food app using Jetpack Compose
 
 JetLoremIpsum is a sample no fragment, single activity app, built with
