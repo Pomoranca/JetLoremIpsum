@@ -18,8 +18,12 @@ fun FeedDetailsScreen(
 val coroutineScope = rememberCoroutineScope()
 
     coroutineScope.launch {
-     //TODO get ITEM
+        val photo = viewModel.repository.getPhoto(feedId!!)
     }
+
+
+
+
 
 
 }

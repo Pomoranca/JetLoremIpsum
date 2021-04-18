@@ -75,11 +75,7 @@ fun PostList(
                     val route = Screen.FeedDetails.route + "/${item.id}"
                     navigateTo(route)
                 })
-
-
             }
-
-
         }
     }
 
@@ -107,7 +103,6 @@ fun PostTitle(post: Photo) {
     Text(post.title, style = MaterialTheme.typography.subtitle1)
 }
 
-
 @Composable
 private fun PostListDivider() {
     Divider(
@@ -115,7 +110,6 @@ private fun PostListDivider() {
         color = MaterialTheme.colors.onSurface.copy(alpha = 0.08f)
     )
 }
-
 
 @Composable
 fun FeedItem(
@@ -142,8 +136,6 @@ fun FeedItem(
             )
             PostTitle(post = item)
         }
-
-
     }
 }
 
