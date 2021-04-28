@@ -1,5 +1,4 @@
-# JetLoremIpsum
-Order food app using Jetpack Compose
+# JetLoremIpsum [UNDER DEVELOPMENT]
 
 JetLoremIpsum is a sample no fragment, single activity app, built with
 [Jetpack Compose](https://developer.android.com/jetpack/compose). The goal of the sample is to
@@ -9,9 +8,7 @@ To try out this app, you need to use the latest Canary version of Android Studio
 You can clone this repository or import the
 project from Android Studio.
 
-Screenshots
------------
- <img src="drawable/screenshot_main" width="425"/>
+![image](https://user-images.githubusercontent.com/48402104/115151034-6c121000-a06b-11eb-9573-cc18e80c2f85.png)
 
 ## Features
 
