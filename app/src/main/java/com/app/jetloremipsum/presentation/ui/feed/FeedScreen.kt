@@ -7,14 +7,18 @@ import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.compose.KEY_ROUTE
+import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation.compose.navigate
+import androidx.navigation.compose.rememberNavController
 import com.app.jetloremipsum.R
-import com.app.jetloremipsum.presentation.components.HorizontalDottedProgressBar
 import com.app.jetloremipsum.presentation.ui.Screen
 import com.app.jetloremipsum.result.Photo
 import dev.chrisbanes.accompanist.coil.CoilImage
@@ -24,11 +28,13 @@ import dev.chrisbanes.accompanist.coil.CoilImage
 fun FeedScreen(
     loading: Boolean,
     viewModel: FeedViewModel,
-    navigateTo: (String) -> Unit
+    navigateTo: (String) -> Unit,
 
 ) {
     val feed = viewModel.photos.value
+
     Scaffold(
+
         topBar = {
             val title = stringResource(id = R.string.app_name)
             TopAppBar(
@@ -44,7 +50,6 @@ fun FeedScreen(
                 navigateTo = navigateTo
             )
         })
-
 }
 
 
@@ -70,7 +75,8 @@ fun PostList(
     } else {
         LazyColumn {
             itemsIndexed(
-                items = posts) { index, item ->
+                items = posts
+            ) { index, item ->
                 FeedItem(item = item, onClick = {
                     val route = Screen.FeedDetails.route + "/${item.id}"
                     navigateTo(route)

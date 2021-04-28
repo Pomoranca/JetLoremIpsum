@@ -16,6 +16,8 @@ fun FeedDetailsScreen(
     viewModel: FeedDetailsViewModel
 ) {
 val coroutineScope = rememberCoroutineScope()
+    
+    Text(text = "DETAILS SCREEN")
 
     coroutineScope.launch {
         val photo = viewModel.repository.getPhoto(feedId!!)

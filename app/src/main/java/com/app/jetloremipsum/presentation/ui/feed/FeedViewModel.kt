@@ -97,11 +97,6 @@ class FeedViewModel @Inject constructor(
 
     }
 
-
-
-    /**
-     * Append new recipes to the current list of recipes
-     */
     private fun appendRecipes(recipes: List<Photo>){
         val current = ArrayList(this.photos.value)
         current.addAll(recipes)
