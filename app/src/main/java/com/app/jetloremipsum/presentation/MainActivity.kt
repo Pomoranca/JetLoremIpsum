@@ -1,6 +1,7 @@
 package com.app.jetloremipsum.presentation
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
@@ -49,6 +50,7 @@ class MainActivity : ComponentActivity() {
             bottomBar = {
                 if (currentRoute(navController = navController) != Screen.Welcome.route) {
                     BottomNavigation {
+
                         val navBackStackEntry by navController.currentBackStackEntryAsState()
                         val currentRoute = navBackStackEntry?.arguments?.getString(KEY_ROUTE)
                         bottomItems.forEach { screen ->
@@ -64,12 +66,11 @@ class MainActivity : ComponentActivity() {
                                 selected = currentRoute == screen.route,
                                 onClick = {
                                     navController.navigate(screen.route) {
+                                    // Pop up to the start destination of the graph to
+                                    // avoid building up a large stack of destinations
+                                    // on the back stack as users select items
+                                        popUpTo = navController.graph.startDestination
 
-                                        //TODO Prevent navcontroller from going to LoginScreen and reduce stack of destinations
-//                                    // Pop up to the start destination of the graph to
-//                                    // avoid building up a large stack of destinations
-//                                    // on the back stack as users select items
-//                                popUpTo = navController.graph.startDestination
 //                                    // Avoid multiple copies of the same destination when
 //                                    // reselecting the same item
                                         launchSingleTop = true
@@ -85,14 +86,18 @@ class MainActivity : ComponentActivity() {
 
         {
 
-            NavHost(navController, startDestination = Screen.Welcome.route) {
+            NavHost(navController, startDestination = Screen.Feed.route) {
 
                 composable(Screen.Welcome.route) { navBackStackEntry ->
                     val viewModel: SignInViewModel by viewModels { SignInViewModelFactory() }
 
                     viewModel.navigateTo.observe(this@MainActivity) { navigateToEvent ->
                         navigateToEvent.getContentIfNotHandled()?.let { navigateTo ->
+
+                            //prevent user from getting back to login screen once logged in
+                            navController.popBackStack()
                             navController.navigate(navigateTo.route)
+
                         }
                     }
 
@@ -112,11 +117,11 @@ class MainActivity : ComponentActivity() {
                             }
                         }
                     })
+
+
                 }
-//                aaa@aaa
 
                 composable(Screen.Feed.route) { navBackStackEntry ->
-
                     val feedViewModel by viewModels<FeedViewModel>()
 
                     FeedScreen(
@@ -137,8 +142,8 @@ class MainActivity : ComponentActivity() {
 
                     FeedDetailsScreen(
                         feedId = navBackStackEntry.arguments?.getInt("itemId"),
-                        viewModel = feedDetailsViewModel
-
+                        activity = this@MainActivity,
+                        loading = feedDetailsViewModel.loading.value
                     )
                 }
 

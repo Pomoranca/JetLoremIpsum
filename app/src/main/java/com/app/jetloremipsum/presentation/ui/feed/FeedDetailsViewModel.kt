@@ -1,15 +1,16 @@
 package com.app.jetloremipsum.presentation.ui.feed
 
-import androidx.compose.runtime.MutableState
+import android.util.Log
 import androidx.compose.runtime.mutableStateOf
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.app.jetloremipsum.repository.impl.PostsRepository
 import com.app.jetloremipsum.result.Photo
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
@@ -17,15 +18,24 @@ class FeedDetailsViewModel @Inject constructor(
     val repository: PostsRepository
 ) : ViewModel() {
 
-    val loading = mutableStateOf(false)
+    val _photo = MutableLiveData<Photo>()
 
-    val photo: MutableState<Photo?> = mutableStateOf(null)
+    val photo: LiveData<Photo>
+        get() = _photo
 
-    suspend fun getRecipe(id: Int) {
-        loading.value = true
-        photo.value = repository.getPhoto(id)
+    val loading = mutableStateOf(true)
+
+    suspend fun getFeedItem(id: Int) {
+        Log.i("PHOTOS", "STARTING GET FEED ITEM")
+        delay(1000)
+        withContext(viewModelScope.coroutineContext) {
+            _photo.value = repository.getPhoto(id)
+        }
         loading.value = false
+
     }
+
+
 }
 
 

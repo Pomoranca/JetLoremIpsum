@@ -146,7 +146,7 @@ fun FeedItem(
 }
 
 @Composable
-private fun FullScreenLoading() {
+fun FullScreenLoading() {
     Box(
         modifier = Modifier
             .fillMaxSize()

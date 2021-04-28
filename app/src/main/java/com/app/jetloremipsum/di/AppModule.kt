@@ -31,6 +31,7 @@ object AppModule {
         Retrofit.Builder()
             .baseUrl(NetworkingConstants.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
+
             .build()
 
     @Provides
