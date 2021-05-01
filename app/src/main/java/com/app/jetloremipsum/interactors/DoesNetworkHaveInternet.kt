@@ -1,7 +1,7 @@
 package com.app.jetloremipsum.interactors
 
 import android.util.Log
-import com.app.jetloremipsum.presentation.util.TAG
+import com.app.jetloremipsum.utils.TAG
 import java.io.IOException
 import java.net.InetSocketAddress
 import javax.net.SocketFactory

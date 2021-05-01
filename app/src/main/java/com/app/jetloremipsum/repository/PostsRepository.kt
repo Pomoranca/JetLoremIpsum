@@ -2,6 +2,7 @@ package com.app.jetloremipsum.repository
 
 import com.app.jetloremipsum.result.Photo
 import com.app.jetloremipsum.result.User
+import com.app.jetloremipsum.ui.feed.Result
 
 interface PostsRepository {
 
@@ -11,7 +12,7 @@ interface PostsRepository {
 
     suspend fun getUsers() : List<User>
 
-    suspend fun getUser(id: Int) : User
+    suspend fun getUser(id: Int) : Result<User>
 
 
 }

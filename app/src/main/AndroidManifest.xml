@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.OrderFoodApp">
         <activity
-            android:name="com.app.jetloremipsum.presentation.MainActivity"
+            android:name="com.app.jetloremipsum.ui.MainActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.OrderFoodApp.NoActionBar">
