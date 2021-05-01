@@ -65,6 +65,9 @@
     <string name="forgot_password">Forgot password</string>
     <string name="welcome">Welcome</string>
     <string name="home">Home</string>
+    <string name="shop">Shop</string>
+    <string name="notifications">Notifications</string>
+    <string name="favorites">Favorites</string>
 
 </resources>
 

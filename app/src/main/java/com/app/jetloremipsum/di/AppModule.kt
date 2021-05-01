@@ -4,8 +4,6 @@ import android.content.Context
 import com.app.jetloremipsum.BaseApplication
 import com.app.jetloremipsum.network.LoremApiService
 import com.app.jetloremipsum.network.NetworkingConstants
-import com.app.jetloremipsum.repository.impl.PostsRepository
-import com.app.jetloremipsum.repository.impl.PostsRepositoryImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

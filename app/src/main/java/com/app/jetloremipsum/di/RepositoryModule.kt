@@ -1,9 +1,8 @@
 package com.app.jetloremipsum.di
 
 import com.app.jetloremipsum.network.ApiHelper
-import com.app.jetloremipsum.network.LoremApiService
-import com.app.jetloremipsum.repository.impl.PostsRepository
-import com.app.jetloremipsum.repository.impl.PostsRepositoryImpl
+import com.app.jetloremipsum.repository.PostsRepository
+import com.app.jetloremipsum.repository.PostsRepositoryImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

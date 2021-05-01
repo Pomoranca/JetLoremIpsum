@@ -4,12 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.app.jetloremipsum.presentation.ui.Screen
-import com.app.jetloremipsum.presentation.ui.welcome.SignInEvent
-import com.app.jetloremipsum.presentation.ui.welcome.SignInEvent.*
+import com.app.jetloremipsum.presentation.ui.navigation.Screen
 import com.app.jetloremipsum.presentation.ui.welcome.UserRepository
 import com.app.jetloremipsum.presentation.util.Event
-import com.app.jetloremipsum.repository.impl.PostsRepository
 
 class SignInViewModel(private val userRepository: UserRepository) : ViewModel(){
 

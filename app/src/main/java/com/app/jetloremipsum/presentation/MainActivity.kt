@@ -1,27 +1,29 @@
 package com.app.jetloremipsum.presentation
 
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
-import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.ExperimentalComposeUiApi
-import androidx.compose.ui.res.stringResource
+import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.*
-import com.app.jetloremipsum.presentation.ui.settings.Settings
-import com.app.jetloremipsum.presentation.ui.Screen
+import com.app.jetloremipsum.presentation.ui.navigation.Screen
 import com.app.jetloremipsum.presentation.ui.feed.*
+import com.app.jetloremipsum.presentation.ui.settings.SettingsScreen
+import com.app.jetloremipsum.presentation.ui.welcome.ErrorSnackbar
 import com.app.jetloremipsum.presentation.ui.welcome.SignIn
 import com.app.jetloremipsum.presentation.ui.welcome.SignInEvent
 import com.app.jetloremipsum.theme.OrderFoodAppTheme
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -30,7 +32,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         setContent {
-            OrderFoodAppTheme() {
+            OrderFoodAppTheme {
                 AppContent()
             }
         }
@@ -46,42 +48,25 @@ class MainActivity : ComponentActivity() {
     fun AppContent(
     ) {
         val navController = rememberNavController()
+        val snackbarHostState = remember { SnackbarHostState() }
         Scaffold(
-            bottomBar = {
+            topBar = {
                 if (currentRoute(navController = navController) != Screen.Welcome.route) {
-                    BottomNavigation {
-
-                        val navBackStackEntry by navController.currentBackStackEntryAsState()
-                        val currentRoute = navBackStackEntry?.arguments?.getString(KEY_ROUTE)
-                        bottomItems.forEach { screen ->
-
-                            BottomNavigationItem(
-                                icon = {
-                                    Icon(
-                                        imageVector = screen.icon!!,
-                                        contentDescription = null
-                                    )
-                                },
-                                label = { Text(stringResource(screen.resourceId)) },
-                                selected = currentRoute == screen.route,
-                                onClick = {
-                                    navController.navigate(screen.route) {
-                                    // Pop up to the start destination of the graph to
-                                    // avoid building up a large stack of destinations
-                                    // on the back stack as users select items
-                                        popUpTo = navController.graph.startDestination
-
-//                                    // Avoid multiple copies of the same destination when
-//                                    // reselecting the same item
-                                        launchSingleTop = true
-                                    }
-                                }
-                            )
-                        }
+                    Column() {
+                        TopBar(navController, snackbarHostState)
+//
                     }
                 }
+            },
+            bottomBar =    {
+                Box(modifier = Modifier.fillMaxSize()) {
+                            ErrorSnackbar(
+                                snackbarHostState = snackbarHostState,
+                                onDismiss = { snackbarHostState.currentSnackbarData?.dismiss() },
+                                modifier = Modifier.align(Alignment.BottomCenter)
+                            )
+                        }
             }
-
         )
 
         {
@@ -147,16 +132,14 @@ class MainActivity : ComponentActivity() {
                     )
                 }
 
-                composable(Screen.Settings.route) { Settings(navController) }
+                composable(Screen.Settings.route) { SettingsScreen(navController) }
+                composable(Screen.Favorites.route) {}
+                composable(Screen.Notification.route) {}
+
 
             }
         }
     }
-
-    val bottomItems = listOf(
-        Screen.Feed,
-        Screen.Settings
-    )
 
 
 }

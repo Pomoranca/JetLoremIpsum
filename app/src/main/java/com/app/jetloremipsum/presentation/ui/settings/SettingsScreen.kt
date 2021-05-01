@@ -5,6 +5,6 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 
 @Composable
-fun Settings(navController: NavHostController) {
+fun SettingsScreen(navController: NavHostController) {
     Text(text = "SETTINGS")
 }

@@ -1,8 +1,8 @@
-package com.app.jetloremipsum.repository.impl
+package com.app.jetloremipsum.repository
 
 import com.app.jetloremipsum.network.ApiHelper
-import com.app.jetloremipsum.network.LoremApiService
 import com.app.jetloremipsum.result.Photo
+import com.app.jetloremipsum.result.User
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -18,9 +18,13 @@ class PostsRepositoryImpl @Inject constructor(private val apiHelper: ApiHelper) 
            return apiHelper.getPhoto(id)
        }
 
-//    override suspend fun getUsers(): Result<List<User>> {
-//        TODO("Not yet implemented")
-//    }
+    override suspend fun getUsers(): List<User> {
+        return apiHelper.getUsers()
+    }
+
+       override suspend fun getUser(id: Int): User {
+           return apiHelper.getUser(id)
+       }
 //
 //    override suspend fun getComments(): Result<List<Comment>> {
 //        TODO("Not yet implemented")

@@ -7,7 +7,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.app.jetloremipsum.presentation.util.TAG
-import com.app.jetloremipsum.repository.impl.PostsRepository
+import com.app.jetloremipsum.repository.PostsRepository
 import com.app.jetloremipsum.result.Photo
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
