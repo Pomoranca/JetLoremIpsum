@@ -21,3 +21,6 @@ val Gray900 = Color(0xFF212121)
 val softGray = Color(0xFFDFDFDF)
 val iconsBackground = Color(0xFFF0F0F0)
 
+val lightFontColor = Color(0xFF535353)
+val darkFontColor = Color(0xFF181818)
+

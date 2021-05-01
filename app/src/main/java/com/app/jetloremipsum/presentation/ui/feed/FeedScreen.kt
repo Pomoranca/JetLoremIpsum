@@ -21,6 +21,9 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.navigate
@@ -31,7 +34,9 @@ import com.app.jetloremipsum.R
 import com.app.jetloremipsum.presentation.ui.navigation.Screen
 import com.app.jetloremipsum.result.Photo
 import com.app.jetloremipsum.theme.Purple500
+import com.app.jetloremipsum.theme.darkFontColor
 import com.app.jetloremipsum.theme.iconsBackground
+import com.app.jetloremipsum.theme.lightFontColor
 import dev.chrisbanes.accompanist.coil.CoilImage
 import kotlinx.coroutines.launch
 
@@ -42,6 +47,8 @@ fun FeedScreen(
     viewModel: FeedViewModel,
     navigateTo: (String) -> Unit,
 ) {
+
+
     val feed = viewModel.photos.value
 
     Scaffold(
@@ -50,7 +57,7 @@ fun FeedScreen(
             PostList(
                 loading = loading,
                 posts = feed,
-                navigateTo = navigateTo
+                navigateTo = navigateTo,
             )
         })
 }
@@ -160,6 +167,7 @@ fun TabsLayout(navController: NavHostController) {
 fun PostList(
     loading: Boolean,
     posts: List<Photo>,
+
     navigateTo: (String) -> Unit,
 ) {
     if (loading && posts.isEmpty()) {
@@ -180,9 +188,26 @@ fun PostList(
 
 }
 
+
 @Composable
-fun PostTitle(post: Photo) {
-    Text(post.title, style = MaterialTheme.typography.subtitle1)
+fun PostTitle(post: Photo, modifier: Modifier = Modifier) {
+    Column(Modifier.padding(bottom = 8.dp)) {
+        Text(
+            text = "Photo ${post.id} ",
+            fontWeight = FontWeight.Bold,
+            style = MaterialTheme.typography.body2,
+            color = darkFontColor
+        )
+        Text(
+            modifier = modifier,
+            text = post.title,
+            style = MaterialTheme.typography.subtitle1,
+            color = lightFontColor,
+            fontStyle = FontStyle.Italic
+        )
+    }
+
+
 }
 
 
@@ -192,30 +217,30 @@ fun FeedItem(
     onClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
+
     Card(
-        shape = RoundedCornerShape(8.dp),
+        shape = RoundedCornerShape(2.dp),
         modifier = modifier
-            .padding(8.dp)
+            .padding(start = 12.dp, end = 12.dp, top = 8.dp, bottom = 8.dp)
+            .defaultMinSize(minHeight = 120.dp)
             .fillMaxWidth()
             .clickable(onClick = onClick),
-        elevation = 4.dp
+        elevation = 6.dp
     ) {
-        Row(Modifier.padding(16.dp)) {
-            CoilImage(
-                data = item.url,
-                fadeIn = true,
-                loading = {
-                    CircularProgressIndicator(Modifier.align(Alignment.Center))
+        Row(Modifier.padding(start = 8.dp, end = 16.dp), verticalAlignment = Alignment.CenterVertically) {
+                CoilImage(
+                    data = item.url,
+                    fadeIn = true,
+                    contentDescription = item.title,
+                    contentScale = ContentScale.Crop,
+                    modifier = modifier
+                        .size(90.dp)
+                )
 
-                },
-                contentDescription = item.title,
-                modifier = modifier
-                    .width(100.dp)
-                    .height(100.dp)
-                    .padding(end = 16.dp),
-                contentScale = ContentScale.Crop
-            )
-            PostTitle(post = item)
+            Column(modifier = modifier.padding(start = 16.dp)) {
+                PostTitle(post = item)
+            }
+
         }
     }
 }
@@ -228,26 +253,21 @@ fun FullScreenLoading() {
             .fillMaxSize()
             .wrapContentSize(Alignment.Center)
     ) {
-        Loader()
+        val animationSpec = remember { LottieAnimationSpec.Asset("loading.json") }
+
+        // You can control isPlaying/progress/repeat/etc. with this.
+        val animationState =
+            rememberLottieAnimationState(autoPlay = true, initialProgress = 0.45f)
+
+        LottieAnimation(
+            spec = animationSpec,
+            modifier = Modifier.size(200.dp),
+            animationState = animationState,
+
+            )
     }
 }
 
-
-@Composable
-fun Loader() {
-    val animationSpec = remember { LottieAnimationSpec.Asset("loading.json") }
-    // You can control isPlaying/progress/repeat/etc. with this.
-    val animationState = rememberLottieAnimationState(autoPlay = true, initialProgress = 0.45f)
-
-    LottieAnimation(
-        spec = animationSpec,
-        modifier = Modifier.size(200.dp),
-        animationState = animationState,
-
-        )
-
-
-}
 
 
 
