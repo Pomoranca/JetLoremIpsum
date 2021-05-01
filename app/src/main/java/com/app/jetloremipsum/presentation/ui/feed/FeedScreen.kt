@@ -1,6 +1,5 @@
 package com.app.jetloremipsum.presentation.ui.feed
 
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -10,7 +9,10 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.TabRowDefaults.tabIndicatorOffset
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -21,13 +23,15 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.KEY_ROUTE
-import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.navigate
+import com.airbnb.lottie.compose.LottieAnimation
+import com.airbnb.lottie.compose.LottieAnimationSpec
+import com.airbnb.lottie.compose.rememberLottieAnimationState
 import com.app.jetloremipsum.R
 import com.app.jetloremipsum.presentation.ui.navigation.Screen
 import com.app.jetloremipsum.result.Photo
-import com.app.jetloremipsum.theme.*
+import com.app.jetloremipsum.theme.Purple500
+import com.app.jetloremipsum.theme.iconsBackground
 import dev.chrisbanes.accompanist.coil.CoilImage
 import kotlinx.coroutines.launch
 
@@ -37,7 +41,7 @@ fun FeedScreen(
     loading: Boolean,
     viewModel: FeedViewModel,
     navigateTo: (String) -> Unit,
-    ) {
+) {
     val feed = viewModel.photos.value
 
     Scaffold(
@@ -102,7 +106,7 @@ val bottomItems = listOf(
     Screen.Favorites,
     Screen.Notification,
     Screen.Settings,
-    )
+)
 
 @Composable
 fun TabsLayout(navController: NavHostController) {
@@ -139,7 +143,7 @@ fun TabsLayout(navController: NavHostController) {
                     }
                 },
 
-            ) {
+                ) {
                 Icon(
                     painter = painterResource(screen.icon!!),
                     contentDescription = stringResource(id = screen.resourceId),
@@ -181,6 +185,7 @@ fun PostTitle(post: Photo) {
     Text(post.title, style = MaterialTheme.typography.subtitle1)
 }
 
+
 @Composable
 fun FeedItem(
     item: Photo,
@@ -198,6 +203,11 @@ fun FeedItem(
         Row(Modifier.padding(16.dp)) {
             CoilImage(
                 data = item.url,
+                fadeIn = true,
+                loading = {
+                    CircularProgressIndicator(Modifier.align(Alignment.Center))
+
+                },
                 contentDescription = item.title,
                 modifier = modifier
                     .width(100.dp)
@@ -218,6 +228,28 @@ fun FullScreenLoading() {
             .fillMaxSize()
             .wrapContentSize(Alignment.Center)
     ) {
-        CircularProgressIndicator()
+        Loader()
     }
 }
+
+
+@Composable
+fun Loader() {
+    val animationSpec = remember { LottieAnimationSpec.Asset("loading.json") }
+    // You can control isPlaying/progress/repeat/etc. with this.
+    val animationState = rememberLottieAnimationState(autoPlay = true, initialProgress = 0.45f)
+
+    LottieAnimation(
+        spec = animationSpec,
+        modifier = Modifier.size(200.dp),
+        animationState = animationState,
+
+        )
+
+
+}
+
+
+
+
+

@@ -13,6 +13,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import kotlin.random.Random
 
 
 @HiltViewModel
@@ -35,6 +36,7 @@ class FeedViewModel @Inject constructor(
 
     private fun onTriggerEvent(event : PhotoListEvent){
         viewModelScope.launch {
+
             try {
                 when(event){
                     is PhotoListEvent.NewSearchEvent -> {
@@ -58,6 +60,10 @@ class FeedViewModel @Inject constructor(
 
     private suspend fun restoreState(){
         loading.value = true
+
+        // randomly delay API to show loading animation
+        delay(Random.nextLong(0, 1000))
+
         val results: MutableList<Photo> = mutableListOf()
         for(p in 1..page.value){
             val result = repository.getPhotos(p)
@@ -70,6 +76,7 @@ class FeedViewModel @Inject constructor(
     }
 
     private suspend fun nextPage(){
+
         // prevent duplicate event due to recompose happening to quickly
         if((photoListScrollPosition + 1) >= (page.value * PAGE_SIZE) ){
             loading.value = true
