@@ -21,19 +21,18 @@ import com.app.jetloremipsum.ui.welcome.ErrorSnackbar
 import com.app.jetloremipsum.utils.UIResponseState
 import dev.chrisbanes.accompanist.coil.CoilImage
 
-@SuppressLint("CoroutineCreationDuringComposition")
 @Composable
 fun FeedDetailsScreen(
     feedId: Int?,
-    activity: ComponentActivity,
-    uiResponseState: UIResponseState?
+    viewModel: FeedDetailsViewModel
 
 ) {
-    val feedDetailsViewModel by activity.viewModels<FeedDetailsViewModel>()
-    feedDetailsViewModel.getFeedItem(feedId!!)
 
+    //TODO data not showing on first load
 
-    when (uiResponseState) {
+    viewModel.getFeedItem(feedId!!)
+
+    when (viewModel.viewState.value) {
         is UIResponseState.Loading -> {
             FullScreenLoading()
         }
@@ -42,7 +41,7 @@ fun FeedDetailsScreen(
         }
 
         is UIResponseState.Success<*> -> {
-            FeedDetails(photo = feedDetailsViewModel.photo.value!!)
+            FeedDetails(photo = viewModel.photo.value!!)
         }
     }
 }

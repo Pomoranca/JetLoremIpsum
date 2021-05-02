@@ -127,8 +127,7 @@ class MainActivity : ComponentActivity() {
 
                     FeedDetailsScreen(
                         feedId = navBackStackEntry.arguments?.getInt("itemId"),
-                        activity = this@MainActivity,
-                        uiResponseState = feedDetailsViewModel.viewState.value
+                        viewModel = feedDetailsViewModel
                     )
                 }
 

@@ -1,7 +1,5 @@
 package com.app.jetloremipsum.ui.feed
 
-import android.util.Log
-import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -10,10 +8,7 @@ import com.app.jetloremipsum.repository.PostsRepository
 import com.app.jetloremipsum.result.Photo
 import com.app.jetloremipsum.utils.UIResponseState
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import java.lang.Exception
 import javax.inject.Inject
 
 
@@ -40,34 +35,15 @@ class FeedDetailsViewModel @Inject constructor(
 
     fun getFeedItem(id: Int) {
         viewModelScope.launch {
-            val result = try { repository.getPhoto(id)
+            try {
+                _photo.value = repository.getPhoto(id)
+                if(photo.value != null) {
+                    _viewState.value = UIResponseState.Success(_photo.value)
+                }
 
-//            } catch (e: Exception) {
-//
-//            }
-//            when(result){
-//                is Result.Success<Photo> -> {
-//
-//                }
-//
-//
-//
-//            }
-
-
-//          try {
-//               _photo.value = repository.getPhoto(id)
-//              _viewState.value = UIResponseState.Success(photo)
-//
-//
-//          } catch (e: Exception) {
-//                _viewState.value = UIResponseState.Error("Cannot load data")
-//                return@launch
-//            }
-
+            } catch (e: Exception) {}
 
         }
-
     }
 
 

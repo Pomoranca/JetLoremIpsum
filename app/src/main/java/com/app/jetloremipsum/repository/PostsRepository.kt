@@ -12,7 +12,7 @@ interface PostsRepository {
 
     suspend fun getUsers() : List<User>
 
-    suspend fun getUser(id: Int) : Result<User>
+    suspend fun getUser(id: Int) : User
 
 
 }
