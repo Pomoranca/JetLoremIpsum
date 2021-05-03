@@ -170,7 +170,7 @@ fun PostList(
     navigateTo: (String) -> Unit,
 ) {
     if (loading && posts.isEmpty()) {
-        FullScreenLoading()
+        FullScreenLoading(fastLoad = false)
 
     } else {
         LazyColumn {
@@ -249,17 +249,20 @@ fun FeedItem(
 
 
 @Composable
-fun FullScreenLoading() {
+fun FullScreenLoading(fastLoad: Boolean) {
     Box(
         modifier = Modifier
             .fillMaxSize()
             .wrapContentSize(Alignment.Center)
     ) {
+        var initialProgress = 0.45f
+
+        if(fastLoad)  initialProgress = 0.70f
+
         val animationSpec = remember { LottieAnimationSpec.Asset("loading.json") }
 
         // You can control isPlaying/progress/repeat/etc. with this.
-        val animationState =
-            rememberLottieAnimationState(autoPlay = true, initialProgress = 0.45f)
+        val animationState = rememberLottieAnimationState(autoPlay = true, initialProgress = initialProgress)
 
         LottieAnimation(
             spec = animationSpec,

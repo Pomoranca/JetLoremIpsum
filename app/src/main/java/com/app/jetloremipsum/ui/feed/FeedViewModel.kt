@@ -21,8 +21,9 @@ class FeedViewModel @Inject constructor(
     val repository: PostsRepository,
 ) : ViewModel() {
 
-    val photos: MutableState<List<Photo>> = mutableStateOf(ArrayList())
+    //TODO ADD PAGINATION TO FEED SCREEN
 
+    val photos: MutableState<List<Photo>> = mutableStateOf(ArrayList())
 
     val loading = mutableStateOf(false)
 
@@ -38,7 +39,6 @@ class FeedViewModel @Inject constructor(
 
     private fun onTriggerEvent(event: PhotoListEvent) {
         viewModelScope.launch {
-
             try {
                 when (event) {
                     is PhotoListEvent.NewSearchEvent -> {

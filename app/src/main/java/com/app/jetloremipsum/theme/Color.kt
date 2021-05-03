@@ -24,3 +24,5 @@ val iconsBackground = Color(0xFFF0F0F0)
 val lightFontColor = Color(0xFF535353)
 val darkFontColor = Color(0xFF181818)
 
+val Grey1 = Color(0xFFF2F2F2)
+
