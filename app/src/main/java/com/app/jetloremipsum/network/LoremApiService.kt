@@ -18,8 +18,8 @@ interface LoremApiService {
     @GET("$URL_POSTS/{number}")
     suspend fun getResult(@Path("number") number: Int): Post
 
-    @GET("$URL_ALBUMS/{number}/$URL_PHOTOS")
-    suspend fun getPhotos(@Path("number") number: Int): List<Photo>
+    @GET("$URL_ALBUMS/{page}/$URL_PHOTOS")
+    suspend fun getPhotos(@Path("page") page: Int): List<Photo>
 
     @GET("$URL_PHOTOS/{id}")
     suspend fun getPhoto(@Path("id") id: Int): Photo

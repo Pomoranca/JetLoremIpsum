@@ -9,13 +9,11 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.TabRowDefaults.tabIndicatorOffset
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.focus.focusModifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
@@ -26,37 +24,43 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.navigate
+import androidx.paging.*
+import androidx.paging.compose.collectAsLazyPagingItems
+import androidx.paging.compose.items
 import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieAnimationSpec
 import com.airbnb.lottie.compose.rememberLottieAnimationState
 import com.app.jetloremipsum.R
 import com.app.jetloremipsum.navigation.Screen
+import com.app.jetloremipsum.repository.PostsRepository
 import com.app.jetloremipsum.result.Photo
 import com.app.jetloremipsum.theme.Purple500
 import com.app.jetloremipsum.theme.darkFontColor
 import com.app.jetloremipsum.theme.iconsBackground
 import com.app.jetloremipsum.theme.lightFontColor
+import com.app.jetloremipsum.utils.ErrorItem
+import com.app.jetloremipsum.utils.LoadingItem
+import com.app.jetloremipsum.utils.LoadingView
 import dev.chrisbanes.accompanist.coil.CoilImage
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 
 
 @Composable
 fun FeedScreen(
-    loading: Boolean,
     viewModel: FeedViewModel,
     navigateTo: (String) -> Unit,
 ) {
 
 
-    val feed = viewModel.photos.value
-
     Scaffold(
         content = { innerPadding ->
             val modifier = Modifier.padding(innerPadding)
             PostList(
-                loading = loading,
-                posts = feed,
-                navigateTo = navigateTo,
+                posts = viewModel.photos,
+                navigateTo = navigateTo
             )
         })
 }
@@ -164,29 +168,54 @@ fun TabsLayout(navController: NavHostController) {
 
 @Composable
 fun PostList(
-    loading: Boolean,
-    posts: List<Photo>,
-
+    posts: Flow<PagingData<Photo>>,
     navigateTo: (String) -> Unit,
+    modifier: Modifier = Modifier,
 ) {
-    if (loading && posts.isEmpty()) {
-        FullScreenLoading(fastLoad = false)
+    val lazyPhotoItems = posts.collectAsLazyPagingItems()
 
-    } else {
-        LazyColumn {
-            itemsIndexed(
-                items = posts
-            ) { index, item ->
-                FeedItem(item = item, onClick = {
-                    val route = Screen.FeedDetails.route + "/${item.id}"
-                    navigateTo(route)
-                })
+    LazyColumn(modifier = modifier.fillMaxSize()) {
+        items(lazyPhotoItems
+        )
+        { item ->
+            FeedItem(item = item!!, onClick = {
+                val route = Screen.FeedDetails.route + "/${item.id}"
+                navigateTo(route)
+            })
+        }
+
+        lazyPhotoItems.apply {
+            when {
+                loadState.refresh is LoadState.Loading -> {
+                    item { FullScreenLoading(fastLoad = false) }
+                }
+                loadState.append is LoadState.Loading -> {
+                    item {
+                        LoadingItem() }
+                }
+                loadState.refresh is LoadState.Error -> {
+                    val e = lazyPhotoItems.loadState.refresh as LoadState.Error
+                    item {
+                        ErrorItem(message = e.error.localizedMessage!!,
+                            modifier = Modifier.fillParentMaxSize(),
+                            onClickRetry = { retry() })
+
+                    }
+                }
+                loadState.append is LoadState.Error -> {
+                    val e = lazyPhotoItems.loadState.append as LoadState.Error
+                    item {
+                        ErrorItem(message = e.error.localizedMessage!!,
+                            onClickRetry = { retry() })
+
+
+                    }
+                }
             }
         }
     }
 
 }
-
 
 @Composable
 fun PostTitle(post: Photo, modifier: Modifier = Modifier) {
@@ -206,15 +235,13 @@ fun PostTitle(post: Photo, modifier: Modifier = Modifier) {
         )
     }
 
-
 }
-
 
 @Composable
 fun FeedItem(
     item: Photo,
     onClick: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
 
     Card(
@@ -255,14 +282,15 @@ fun FullScreenLoading(fastLoad: Boolean) {
             .fillMaxSize()
             .wrapContentSize(Alignment.Center)
     ) {
-        var initialProgress = 0.45f
+        var initialProgress = 0.25f
 
-        if(fastLoad)  initialProgress = 0.70f
+        if (fastLoad) initialProgress = 0.55f
 
         val animationSpec = remember { LottieAnimationSpec.Asset("loading.json") }
 
         // You can control isPlaying/progress/repeat/etc. with this.
-        val animationState = rememberLottieAnimationState(autoPlay = true, initialProgress = initialProgress)
+        val animationState =
+            rememberLottieAnimationState(autoPlay = true, initialProgress = initialProgress)
 
         LottieAnimation(
             spec = animationSpec,

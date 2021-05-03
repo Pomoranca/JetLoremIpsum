@@ -1,5 +1,6 @@
 package com.app.jetloremipsum.ui
 
+import android.content.Context
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -13,23 +14,30 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.datastore.core.DataStore
+import androidx.datastore.dataStore
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.*
 import com.app.jetloremipsum.navigation.Screen
 import com.app.jetloremipsum.ui.feed.*
-import com.app.jetloremipsum.ui.settings.SettingsScreen
 import com.app.jetloremipsum.ui.welcome.ErrorSnackbar
 import com.app.jetloremipsum.ui.welcome.SignIn
 import com.app.jetloremipsum.ui.welcome.SignInEvent
 import com.app.jetloremipsum.theme.OrderFoodAppTheme
+import com.app.jetloremipsum.ui.favorites.FavoritesScreen
+import com.app.jetloremipsum.ui.notifications.NotificationsScreen
+import com.app.jetloremipsum.ui.settings.SettingsScreen
+import com.app.jetloremipsum.ui.settings.settingsDataStore
 import com.app.jetloremipsum.utils.ConnectivityManager
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
+
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
-
     @Inject
     lateinit var connectivityManager: ConnectivityManager
 
@@ -48,15 +56,19 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         setContent {
-                AppContent()
+            AppContent()
         }
     }
+
+
 
     @Composable
     fun currentRoute(navController: NavHostController): String? {
         val navBackStackEntry by navController.currentBackStackEntryAsState()
         return navBackStackEntry?.arguments?.getString(KEY_ROUTE)
     }
+
+
 
     @Composable
     fun AppContent(
@@ -73,7 +85,7 @@ class MainActivity : ComponentActivity() {
                         }
                     }
                 },
-                bottomBar =    {
+                bottomBar = {
                     Box(modifier = Modifier.fillMaxSize()) {
                         ErrorSnackbar(
                             snackbarHostState = snackbarHostState,
@@ -127,7 +139,6 @@ class MainActivity : ComponentActivity() {
                         FeedScreen(
                             navigateTo = navController::navigate,
                             viewModel = feedViewModel,
-                            loading = feedViewModel.loading.value,
                         )
                     }
 
@@ -146,9 +157,9 @@ class MainActivity : ComponentActivity() {
                         )
                     }
 
-                    composable(Screen.Settings.route) { SettingsScreen(navController) }
-                    composable(Screen.Favorites.route) {}
-                    composable(Screen.Notification.route) {}
+                    composable(Screen.Settings.route) { SettingsScreen(this@MainActivity) }
+                    composable(Screen.Favorites.route) { FavoritesScreen() }
+                    composable(Screen.Notification.route) { NotificationsScreen() }
 
 
                 }
