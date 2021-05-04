@@ -6,6 +6,6 @@ option java_multiple_files = true;
 
 message Settings {
   int32 page_counter = 1; //results to return per page
-  int32 volume_counter = 2; //notifications volume
+  int64 volume_counter = 2; //notifications volume
   string user_name = 3;
 }
