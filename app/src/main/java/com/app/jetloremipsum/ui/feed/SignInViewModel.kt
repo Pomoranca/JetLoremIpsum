@@ -5,11 +5,17 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.app.jetloremipsum.navigation.Screen
+import com.app.jetloremipsum.repository.PostsRepository
 import com.app.jetloremipsum.ui.welcome.UserRepository
 import com.app.jetloremipsum.utils.Event
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class SignInViewModel(private val userRepository: UserRepository) : ViewModel(){
-
+@HiltViewModel
+class SignInViewModel
+@Inject constructor(
+    private val userRepository: UserRepository,
+) : ViewModel() {
 
     private val _navigateTo = MutableLiveData<Event<Screen>>()
     val navigateTo: LiveData<Event<Screen>>
@@ -18,6 +24,7 @@ class SignInViewModel(private val userRepository: UserRepository) : ViewModel(){
     /**
      * Consider all sign ins successful
      */
+
     fun signIn(email: String, password: String) {
         userRepository.signIn(email, password)
         _navigateTo.value = Event(Screen.Feed)
@@ -32,6 +39,7 @@ class SignInViewModel(private val userRepository: UserRepository) : ViewModel(){
 //        _navigateTo.value = Event(SignUp)
     }
 }
+
 @Suppress("UNCHECKED_CAST")
 class SignInViewModelFactory : ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {

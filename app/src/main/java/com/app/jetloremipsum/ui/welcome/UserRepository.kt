@@ -1,6 +1,9 @@
 package com.app.jetloremipsum.ui.welcome
 
 import androidx.compose.runtime.Immutable
+import dagger.Module
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
 
 sealed class User {
     @Immutable
@@ -15,6 +18,8 @@ sealed class User {
  * In a production app, this class would also handle the communication with the backend for
  * sign in and sign up.
  */
+@Module
+@InstallIn(SingletonComponent::class)
 object UserRepository {
 
     private var _user: User = User.NoUserLoggedIn

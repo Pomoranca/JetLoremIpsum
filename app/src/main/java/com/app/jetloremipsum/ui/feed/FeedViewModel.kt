@@ -12,9 +12,10 @@ import javax.inject.Inject
 
 
 @HiltViewModel
-class FeedViewModel @Inject constructor(
+class FeedViewModel
+@Inject constructor(
     private val repository: PostsRepository,
-    ) : ViewModel() {
+) : ViewModel() {
 
     val photos: Flow<PagingData<Photo>> = Pager(PagingConfig(pageSize = 30)) {
         PhotoSource(repository)

@@ -70,6 +70,7 @@ fun loadNetworkImage(
 
         // Update State with either an Error or Success result.
         // This will trigger a recomposition where this State is read
+        //TODO Show error image when NETWORK not available
         value = if(image.albumId == -1){
             Result.Error("ERROR")
 

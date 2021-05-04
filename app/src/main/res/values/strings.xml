@@ -68,6 +68,7 @@
     <string name="shop">Shop</string>
     <string name="notifications">Notifications</string>
     <string name="favorites">Favorites</string>
+    <string name="name">Username</string>
 
 </resources>
 

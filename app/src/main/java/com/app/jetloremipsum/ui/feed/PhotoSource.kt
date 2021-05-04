@@ -10,7 +10,8 @@ import javax.inject.Inject
 
 class PhotoSource
 @Inject constructor(
-    val repository: PostsRepository) : PagingSource<Int, Photo>() {
+    val repository: PostsRepository,
+) : PagingSource<Int, Photo>() {
 
     override fun getRefreshKey(state: PagingState<Int, Photo>): Int? {
         TODO("Not yet implemented")
@@ -27,7 +28,7 @@ class PhotoSource
                 prevKey = if (nextPage == 1) null else nextPage - 1,
                 nextKey = nextPage.plus(1)
             )
-        } catch (e: Exception){
+        } catch (e: Exception) {
             LoadResult.Error(e)
         }
 

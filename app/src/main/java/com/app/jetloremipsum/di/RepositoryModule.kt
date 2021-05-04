@@ -3,6 +3,7 @@ package com.app.jetloremipsum.di
 import com.app.jetloremipsum.network.ApiHelper
 import com.app.jetloremipsum.repository.PostsRepository
 import com.app.jetloremipsum.repository.PostsRepositoryImpl
+import com.app.jetloremipsum.ui.welcome.UserRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -16,11 +17,17 @@ object RepositoryModule {
     @Singleton
     @Provides
     fun provideRepository(
-        apiHelper: ApiHelper
-    ) : PostsRepository {
+        apiHelper: ApiHelper,
+    ): PostsRepository {
         return PostsRepositoryImpl(
             apiHelper = apiHelper
         )
+    }
+
+    @Singleton
+    @Provides
+    fun provideUserRepository(): UserRepository {
+        return UserRepository
     }
 
 }
