@@ -29,7 +29,7 @@ project from Android Studio.
 - [LiveData](https://developer.android.com/topic/libraries/architecture/livedata)
 
 
-This sample contains several screens: a welcome screen, where the user can enter their email, sign in screen and main screen showing how to use tab navigation with compose. 
+This sample contains two screens: a `Sign in screen`, where the user can enter their email and `Main screen` showing how to use tab navigation with compose. 
 
 ### Sign in/sign up
 
@@ -43,7 +43,12 @@ See how to:
 ### Navigate in main screen
 
 Use of Retrofit and `Jetpack Compose navigation`, combined with` Tab Layout`, `ViewModel`, `CoilImage`, `LazyColumn`, `Lottie` and `Pagination`.
-Loading is purposly delayed to show use of Lottie loading animation.
+Loading is purposly delayed to show use of Lottie loading animation. Main screen has four tabs:
+
+- Feed
+- Favorites
+- Notifications
+- Settings
 
 ### Notifications/Favorites
 
