@@ -14,7 +14,7 @@ project from Android Studio.
 
 ## Features
 
-This sample contains several screens: a welcome screen, where the user can enter their email, sign in and screen and main screen showing how to use tab navigation with compose. 
+This sample contains several screens: a welcome screen, where the user can enter their email, sign in screen and main screen showing how to use tab navigation with compose. 
 
 ### Sign in/sign up
 
