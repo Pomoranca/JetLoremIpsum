@@ -15,6 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.focusModifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
@@ -155,7 +156,7 @@ fun TabsLayout(navController: NavHostController) {
 
                 ) {
                 Icon(
-                    painter = painterResource(screen.icon!!),
+                    painter = rememberVectorPainter(screen.icon!!),
                     contentDescription = stringResource(id = screen.resourceId),
                     modifier = Modifier.padding(16.dp),
                     tint = if (selectedTabIndex.value == index) Purple500 else Color.Gray,

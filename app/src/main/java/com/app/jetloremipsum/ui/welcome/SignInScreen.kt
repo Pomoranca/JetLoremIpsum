@@ -48,7 +48,15 @@ fun SignIn(onNavigationEvent: (SignInEvent) -> Unit) {
         topBar = {
             SignInSignUpTopAppBar(
                 topAppBarText = stringResource(id = R.string.sign_in),
-                onBackPressed = { onNavigationEvent(SignInEvent.NavigateBack) }
+                onBackPressed = {
+                    scope.launch {
+                        snackbarHostState.showSnackbar(
+                            message = snackbarErrorText,
+                            actionLabel = snackbarActionLabel
+                        )
+                    }
+
+                }
             )
         },
         content = {
@@ -95,7 +103,7 @@ fun SignIn(onNavigationEvent: (SignInEvent) -> Unit) {
 fun SignInSignUpScreen(
     onSignedInAsGuest: () -> Unit,
     modifier: Modifier = Modifier,
-    content: @Composable() () -> Unit
+    content: @Composable() () -> Unit,
 ) {
     LazyColumn(modifier = modifier) {
         item {
@@ -119,7 +127,7 @@ fun SignInSignUpScreen(
 }
 
 @Composable
-fun  SignInContent(
+fun SignInContent(
     onSignInSubmitted: (email: String, password: String) -> Unit,
 ) {
     Column(modifier = Modifier.fillMaxWidth()) {
@@ -153,6 +161,7 @@ fun  SignInContent(
 
 @Composable
 fun SignInSignUpTopAppBar(topAppBarText: String, onBackPressed: () -> Unit) {
+
     TopAppBar(
         title = {
             Text(
@@ -185,7 +194,7 @@ fun SignInSignUpTopAppBar(topAppBarText: String, onBackPressed: () -> Unit) {
 fun Email(
     emailState: TextFieldState = remember { EmailState() },
     imeAction: ImeAction = ImeAction.Next,
-    onImeAction: () -> Unit = {}
+    onImeAction: () -> Unit = {},
 ) {
     OutlinedTextField(
         value = emailState.text,
@@ -228,7 +237,7 @@ fun Password(
     passwordState: TextFieldState,
     modifier: Modifier = Modifier,
     imeAction: ImeAction = ImeAction.Done,
-    onImeAction: () -> Unit = {}
+    onImeAction: () -> Unit = {},
 ) {
     val showPassword = remember { mutableStateOf(false) }
     OutlinedTextField(
@@ -307,7 +316,7 @@ fun TextFieldError(textError: String) {
 @Composable
 fun OrSignInAsGuest(
     onSignedInAsGuest: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Column(
         modifier = modifier,
@@ -337,9 +346,9 @@ fun OrSignInAsGuest(
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun ErrorSnackbar(
-    snackbarHostState: SnackbarHostState,
     modifier: Modifier = Modifier,
-    onDismiss: () -> Unit = { }
+    snackbarHostState: SnackbarHostState = SnackbarHostState(),
+    onDismiss: () -> Unit = { },
 ) {
     SnackbarHost(
         hostState = snackbarHostState,

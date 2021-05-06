@@ -1,26 +1,32 @@
 package com.app.jetloremipsum.navigation
 
 import androidx.annotation.StringRes
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Notifications
+import androidx.compose.material.icons.filled.Settings
+import androidx.compose.ui.graphics.vector.ImageVector
 import com.app.jetloremipsum.R
 
 
-sealed class Screen(val route: String, @StringRes val resourceId: Int, val icon: Int?) {
+sealed class Screen(val route: String, @StringRes val resourceId: Int, val icon: ImageVector?) {
 
     /** Login Screen */
     object Welcome: Screen("Welcome", R.string.welcome, null)
 
     /** Feed Screen */
-    object Feed : Screen("Feed", R.string.feed, R.drawable.ic_round_home_24)
+    object Feed : Screen("Feed", R.string.feed, Icons.Filled.Home)
     object FeedDetails : Screen("FeedDetails", R.string.feed_details, null)
 
     /** Shop Screen */
-    object Favorites: Screen("Home", R.string.favorites, R.drawable.ic_round_storefront_24)
+    object Favorites: Screen("Home", R.string.favorites, Icons.Filled.Favorite)
 
     /** Notifications Screen */
-    object Notification: Screen("Notifications", R.string.notifications, R.drawable.ic_round_notifications_24)
+    object Notification: Screen("Notifications", R.string.notifications, Icons.Filled.Notifications)
 
     /** Settings Screen */
-    object Settings : Screen("Settings", R.string.settings, R.drawable.ic_round_menu_24)
+    object Settings : Screen("Settings", R.string.settings, Icons.Filled.Settings)
 
 
 

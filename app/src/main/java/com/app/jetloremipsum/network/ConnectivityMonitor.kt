@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
+import androidx.compose.material.icons.materialIcon
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -19,7 +20,8 @@ fun ConnectivityMonitor(
             Text(
                 "No network connection",
                 modifier = Modifier.align(Alignment.CenterHorizontally).padding(8.dp),
-                style = MaterialTheme.typography.h6
+                style = MaterialTheme.typography.h6,
+                color = MaterialTheme.colors.error
             )
         }
     }

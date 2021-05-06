@@ -61,7 +61,6 @@ class MainActivity : ComponentActivity() {
     }
 
 
-
     @Composable
     fun currentRoute(navController: NavHostController): String? {
         val navBackStackEntry by navController.currentBackStackEntryAsState()
@@ -98,7 +97,7 @@ class MainActivity : ComponentActivity() {
 
             {
 
-                NavHost(navController, startDestination = Screen.Feed.route) {
+                NavHost(navController, startDestination = Screen.Welcome.route) {
 
                     composable(Screen.Welcome.route) { navBackStackEntry ->
                         val viewModel: SignInViewModel by viewModels { SignInViewModelFactory() }
