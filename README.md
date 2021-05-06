@@ -1,5 +1,7 @@
 # JetLoremIpsum
 
+`JETPACK COMPOSE` - `NAVIGATION` - `DATASTORE` - `VIEWMODEL` - `COROUTINES` - `FLOW` - `PAGINATION` - `LIVEDATA` 
+
 JetLoremIpsum is a sample no fragment, single activity app, built with
 [Jetpack Compose](https://developer.android.com/jetpack/compose). The goal of the sample is to
 showcase capabilities of Compose.
@@ -25,16 +27,16 @@ See how to:
 
 ### Navigate in main screen
 
-Use of Retrofit and Jetpack Compose navigation, combined with Tab Layout, ViewModel, CoilImage, LazyColumn, Lottie and Pagination.
+Use of Retrofit and `Jetpack Compose navigation`, combined with` Tab Layout`, `ViewModel`, `CoilImage`, `LazyColumn`, `Lottie` and `Pagination`.
 Loading is purposly delayed to show use of Lottie loading animation.
 
 ### Notifications/Favorites
 
-Use of Lottie animation 
+Use of `Lottie` animation 
 
 ### Settings
 
-This composable screen shows how to use Jetpack Datastore, more precisely Proto DataStore.
+This composable screen shows how to use `Jetpack Datastore`, more precisely `Proto DataStore`.
 DataStore is a new and improved data storage solution aimed at replacing SharedPreferences. Built on Kotlin coroutines and Flow, DataStore provides two different implementations: Proto DataStore, that lets you store typed objects (backed by protocol buffers) and Preferences DataStore, that stores key-value pairs. Data is stored asynchronously, consistently, and transactionally, overcoming some of the drawbacks of SharedPreferences.
 
 ### Data
