@@ -10,7 +10,7 @@ To try out this app, you need to use the latest Canary version of Android Studio
 You can clone this repository or import the
 project from Android Studio.
 
-![image](https://user-images.githubusercontent.com/48402104/115151034-6c121000-a06b-11eb-9573-cc18e80c2f85.png)
+![image](https://user-images.githubusercontent.com/48402104/117341404-593c6f80-aea2-11eb-8101-dac099def526.png)
 
 ## Features
 
