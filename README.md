@@ -37,7 +37,7 @@ Use of `Lottie` animation
 ### Settings
 
 This composable screen shows how to use `Jetpack Datastore`, more precisely `Proto DataStore`.
-DataStore is a new and improved data storage solution aimed at replacing SharedPreferences. Built on Kotlin coroutines and Flow, DataStore provides two different implementations: Proto DataStore, that lets you store typed objects (backed by protocol buffers) and Preferences DataStore, that stores key-value pairs. Data is stored asynchronously, consistently, and transactionally, overcoming some of the drawbacks of SharedPreferences.
+DataStore is a new and improved data storage solution aimed at replacing SharedPreferences. Built on `Kotlin coroutines` and `Flow`, `DataStore` provides two different implementations: `Proto DataStore`, that lets you store typed objects (backed by protocol buffers) and `Preferences DataStore`, that stores key-value pairs. Data is stored asynchronously, consistently, and transactionally, overcoming some of the drawbacks of `SharedPreferences`.
 
 ### Data
 
