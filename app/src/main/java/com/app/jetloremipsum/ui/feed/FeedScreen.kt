@@ -4,7 +4,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
@@ -13,7 +12,6 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.focus.focusModifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.layout.ContentScale
@@ -33,7 +31,6 @@ import com.airbnb.lottie.compose.LottieAnimationSpec
 import com.airbnb.lottie.compose.rememberLottieAnimationState
 import com.app.jetloremipsum.R
 import com.app.jetloremipsum.navigation.Screen
-import com.app.jetloremipsum.repository.PostsRepository
 import com.app.jetloremipsum.result.Photo
 import com.app.jetloremipsum.theme.Purple500
 import com.app.jetloremipsum.theme.darkFontColor
@@ -41,10 +38,7 @@ import com.app.jetloremipsum.theme.iconsBackground
 import com.app.jetloremipsum.theme.lightFontColor
 import com.app.jetloremipsum.utils.ErrorItem
 import com.app.jetloremipsum.utils.LoadingItem
-import com.app.jetloremipsum.utils.LoadingView
 import dev.chrisbanes.accompanist.coil.CoilImage
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 
@@ -58,7 +52,6 @@ fun FeedScreen(
 
     Scaffold(
         content = { innerPadding ->
-            val modifier = Modifier.padding(innerPadding)
             PostList(
                 posts = viewModel.photos,
                 navigateTo = navigateTo

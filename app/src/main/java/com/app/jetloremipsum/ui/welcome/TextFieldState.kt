@@ -9,8 +9,8 @@ open class TextFieldState(
 ) {
     var text: String by mutableStateOf("")
     // was the TextField ever focused
-    var isFocusedDirty: Boolean by mutableStateOf(false)
-    var isFocused: Boolean by mutableStateOf(false)
+    private var isFocusedDirty: Boolean by mutableStateOf(false)
+    private var isFocused: Boolean by mutableStateOf(false)
     private var displayErrors: Boolean by mutableStateOf(false)
 
     open val isValid: Boolean

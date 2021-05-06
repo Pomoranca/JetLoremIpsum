@@ -22,7 +22,7 @@ object DoesNetworkHaveInternet {
             Log.d(TAG, "PING success.")
             true
         }catch (e: IOException){
-            Log.e(TAG, "No internet connection. ${e}")
+            Log.e(TAG, "No internet connection. $e")
             false
         }
     }

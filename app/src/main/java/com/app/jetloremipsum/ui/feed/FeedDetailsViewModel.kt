@@ -9,9 +9,6 @@ import javax.inject.Inject
 @HiltViewModel
 class FeedDetailsViewModel @Inject constructor(
     val repository: PostsRepository,
-) : ViewModel() {
-
-
-}
+) : ViewModel()
 
 

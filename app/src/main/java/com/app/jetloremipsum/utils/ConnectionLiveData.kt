@@ -14,7 +14,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-val TAG = "C-Manager"
+const val TAG = "C-Manager"
 
 /**
  * Save all available networks with an internet connection to a set (@validNetworks).
@@ -63,7 +63,7 @@ class ConnectionLiveData(context: Context) : LiveData<Boolean>() {
           val hasInternet = DoesNetworkHaveInternet.execute(network.socketFactory)
           if(hasInternet){
             withContext(Dispatchers.Main){
-              Log.d(TAG, "onAvailable: adding network. ${network}")
+              Log.d(TAG, "onAvailable: adding network. $network")
               validNetworks.add(network)
               checkValidNetworks()
             }

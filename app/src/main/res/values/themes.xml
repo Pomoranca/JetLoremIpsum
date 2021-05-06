@@ -19,7 +19,4 @@
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="Theme.OrderFoodApp.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
-
-    <style name="Theme.OrderFoodApp.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>

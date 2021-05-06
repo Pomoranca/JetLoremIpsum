@@ -16,19 +16,6 @@ import kotlinx.coroutines.*
 
 
 @Composable
-fun LoadingView(
-    modifier: Modifier = Modifier,
-) {
-    Box(
-        modifier = modifier
-            .fillMaxSize()
-            .wrapContentSize(Alignment.Center)
-    ) {
-        CircularProgressIndicator()
-    }
-}
-
-@Composable
 fun LoadingItem() {
 
     CircularProgressIndicator(

@@ -23,16 +23,9 @@ sealed class User {
 object UserRepository {
 
     private var _user: User = User.NoUserLoggedIn
-    val user: User
-        get() = _user
 
     @Suppress("UNUSED_PARAMETER")
     fun signIn(email: String, password: String) {
-        _user = User.LoggedInUser(email)
-    }
-
-    @Suppress("UNUSED_PARAMETER")
-    fun signUp(email: String, password: String) {
         _user = User.LoggedInUser(email)
     }
 
@@ -40,8 +33,4 @@ object UserRepository {
         _user = User.GuestUser
     }
 
-    fun isKnownUserEmail(email: String): Boolean {
-        // if the email contains "sign up" we consider it unknown
-        return !email.contains("signup")
-    }
 }

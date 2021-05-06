@@ -78,7 +78,7 @@ class MainActivity : ComponentActivity() {
             Scaffold(
                 topBar = {
                     if (currentRoute(navController = navController) != Screen.Welcome.route) {
-                        Column() {
+                        Column {
                             TopBar(navController, snackbarHostState)
 //
                         }

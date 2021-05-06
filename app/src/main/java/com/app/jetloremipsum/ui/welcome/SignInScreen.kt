@@ -103,7 +103,7 @@ fun SignIn(onNavigationEvent: (SignInEvent) -> Unit) {
 fun SignInSignUpScreen(
     onSignedInAsGuest: () -> Unit,
     modifier: Modifier = Modifier,
-    content: @Composable() () -> Unit,
+    content: @Composable () -> Unit,
 ) {
     LazyColumn(modifier = modifier) {
         item {
