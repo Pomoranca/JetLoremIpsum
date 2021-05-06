@@ -1,18 +1,33 @@
 # JetLoremIpsum
 
-`JETPACK COMPOSE` - `NAVIGATION` - `DATASTORE` - `VIEWMODEL` - `COROUTINES` - `FLOW` - `PAGINATION` - `LIVEDATA` 
-
-JetLoremIpsum is a sample no fragment, single activity app, built with
+JetLoremIpsum is a sample, no fragment, single activity app, built with
 [Jetpack Compose](https://developer.android.com/jetpack/compose). The goal of the sample is to
 showcase capabilities of Compose.
-
-To try out this app, you need to use the latest Canary version of Android Studio 4.2.
+To try out this app, you need to use the latest [Canary](https://developer.android.com/studio/preview?gclid=Cj0KCQjwp86EBhD7ARIsAFkgakh1tFGhNOW5ZJkXK5LOieuyxYEZ6Vaw93sp5kN8bQGkTA1BLRQbn8saAlcBEALw_wcB&gclsrc=aw.ds
+) version of Android Studio 4.2.
 You can clone this repository or import the
 project from Android Studio.
 
 ![image](https://user-images.githubusercontent.com/48402104/117341404-593c6f80-aea2-11eb-8101-dac099def526.png)
 
 ## Features
+
+- [Jetpack Compose](https://developer.android.com/jetpack/compose/documentation)
+
+- [Navigation](https://developer.android.com/jetpack/compose/navigation)
+
+- [Datastore](https://developer.android.com/topic/libraries/architecture/datastore)
+
+- [ViewModel](https://developer.android.com/topic/libraries/architecture/viewmodel)
+
+- [Coroutines](https://developer.android.com/kotlin/coroutines)
+
+- [Flow](https://developer.android.com/kotlin/flow)
+
+- [Pagination](https://developer.android.com/jetpack/androidx/releases/paging)
+
+- [LiveData](https://developer.android.com/topic/libraries/architecture/livedata)
+
 
 This sample contains several screens: a welcome screen, where the user can enter their email, sign in screen and main screen showing how to use tab navigation with compose. 
 
@@ -43,4 +58,6 @@ DataStore is a new and improved data storage solution aimed at replacing SharedP
 
 The data in the sample is from 
 https://jsonplaceholder.typicode.com/
+
+
 
